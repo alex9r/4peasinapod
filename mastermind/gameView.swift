@@ -72,7 +72,7 @@ struct GameView: View {
                             }
                             DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                                 pouchIsPressed = false
-                                openPouch = true
+                                openPouch.toggle()
                             }
                         }
                     Image("Menu")
@@ -96,6 +96,9 @@ struct GameView: View {
                 .cornerRadius(15) // Rounds the edges of the background
                 .shadow(radius: 5) // Adds a soft shadow
                 .frame(maxWidth: .infinity)
+                .sheet(isPresented: $openPouch) {
+                    SeedPouchPopupView(isPresented: $openPouch)
+                }
             }
         }
     }
