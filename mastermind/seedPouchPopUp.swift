@@ -10,12 +10,12 @@ import SwiftUI
 struct SeedPouchPopupView: View {
     // Binding to the state from the parent view
     @Binding var isPresented: Bool
+    @Binding var currentGuess: [guessColour]
+    @Binding var guesses: [[guessColour]]
     @State private var selectedColors: [guessColour] = []
     
     var body: some View {
         ZStack {
-            
-            
             // Close button at the top-right corner
             VStack {
                 HStack {
@@ -93,12 +93,28 @@ struct SeedPouchPopupView: View {
     }
     func submitGuess() {
         print("Submitted Guess: \(selectedColors)")
+        guesses.append(selectedColors)
+        
+        // Update the current guess with the selected colors
+        currentGuess = selectedColors
+        
+        // Clear the selected colors for the next round of guessing
         selectedColors.removeAll()
+        
+        // Close the popup
+        isPresented = false
     }
 }
 
-#Preview {
-    SeedPouchPopupView(isPresented: .constant(true))
+struct SeedPouchPopupView_Preview: PreviewProvider {
+    static var previews: some View {
+        SeedPouchPopupView(
+            isPresented: .constant(true),
+            currentGuess: .constant([]), // Empty array initially
+            guesses: .constant([]) // No guesses initially
+        )
+        .previewLayout(.sizeThatFits) // Use fitting size for preview
+    }
 }
 
 

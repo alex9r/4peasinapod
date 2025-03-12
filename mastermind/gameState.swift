@@ -65,5 +65,32 @@ class GameState: ObservableObject {
         self.secretCode = generateRandomAnswer()
     }
     
-    func submitGuess(_ guessColors: [Color], forRound round: Int) {}
-}
+    func evaluateGuess(_ guessColors: [Colour]) -> (bees: Int, ladybugs: Int) {
+            var bees = 0
+            var ladybugs = 0
+            var remainingSecret = secretCode
+            var remainingGuess = guessColors
+
+            // First, check for ladybugs (correct color, correct position)
+            for (index, color) in guessColors.enumerated() {
+                if secretCode[index].colour == color {
+                    ladybugs += 1
+                    remainingSecret[index].guessed = true
+                    remainingGuess[index] = Colour.white  // Mark this guess as processed
+                }
+            }
+
+            // Then, check for bees (correct color, wrong position)
+            for (index, color) in remainingGuess.enumerated() {
+                if color != Colour.white, let secretIndex = remainingSecret.firstIndex(where: { $0.colour == color && !$0.guessed }) {
+                    bees += 1
+                    remainingSecret[secretIndex].guessed = true
+                }
+            }
+
+            return (bees, ladybugs)
+        }
+    }
+
+    
+ 
