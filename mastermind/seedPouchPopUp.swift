@@ -17,27 +17,6 @@ struct SeedPouchPopupView: View {
     var body: some View {
         ZStack {
 
-            //            RadialGradient(
-            //                gradient: Gradient(colors: [Color.brown.opacity(0.5), Color.brown.opacity(0.7)]),
-            //                center: .center,
-            //                startRadius: 10,
-            //                endRadius: 300
-            //            )
-            //            .edgesIgnoringSafeArea(.all)
-            
-            VStack {
-                Text("seed pouch")
-                    .font(.title)
-                    .padding()
-                    .padding(.top, 20)
-            }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .background(Color.white)
-            .cornerRadius(20)
-            .shadow(radius: 10)
-            
-
-            // Close button at the top-right corner
             VStack {
                 HStack {
                     Spacer()
@@ -125,5 +104,16 @@ struct SeedPouchPopupView: View {
         
         // Close the popup
         isPresented = false
+    }
+}
+
+struct SeedPouchPopupView_Preview: PreviewProvider {
+    static var previews: some View {
+        SeedPouchPopupView(
+            isPresented: .constant(true),
+            currentGuess: .constant([]), // Empty array initially
+            guesses: .constant([]) // No guesses initially
+        )
+        .previewLayout(.sizeThatFits) // Use fitting size for preview
     }
 }
