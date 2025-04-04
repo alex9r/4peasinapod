@@ -16,6 +16,27 @@ struct SeedPouchPopupView: View {
     
     var body: some View {
         ZStack {
+
+            //            RadialGradient(
+            //                gradient: Gradient(colors: [Color.brown.opacity(0.5), Color.brown.opacity(0.7)]),
+            //                center: .center,
+            //                startRadius: 10,
+            //                endRadius: 300
+            //            )
+            //            .edgesIgnoringSafeArea(.all)
+            
+            VStack {
+                Text("seed pouch")
+                    .font(.title)
+                    .padding()
+                    .padding(.top, 20)
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(Color.white)
+            .cornerRadius(20)
+            .shadow(radius: 10)
+            
+
             // Close button at the top-right corner
             VStack {
                 HStack {
@@ -26,6 +47,7 @@ struct SeedPouchPopupView: View {
                         Image(systemName: "xmark.circle.fill")
                             .font(.system(size: 30))
                             .foregroundColor(Color(r: 52/255, g: 24/255, b: 16/255))
+                            .padding()
                     }
                 }
                 
@@ -35,7 +57,7 @@ struct SeedPouchPopupView: View {
                 
                 // **Dye Selection Grid**
                 ScrollView {
-                    LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 20), count: 2), spacing: 15) {
+                    LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 20), count: 4), spacing: 15) {
                         ForEach(guessColours, id: \.name) { gColour in
                             Button(action: {
                                 if selectedColors.count < 4 { // Max 4 colors
@@ -45,7 +67,7 @@ struct SeedPouchPopupView: View {
                                 Image(gColour.name) // Uses the PNG name
                                     .resizable()
                                     .scaledToFit()
-                                    .frame(width: 100, height: 85)
+                                    .frame(width: 60, height: 60)
                                     .shadow(radius: 5)
                             }
                         }
@@ -72,21 +94,21 @@ struct SeedPouchPopupView: View {
                 .cornerRadius(10)
                 
                 // Submit Button
-                Button(action:
-                        {
-                            if selectedColors.count == 4 {
-                                submitGuess() // Submit the guess when 4 colors are selected
-                            }})
-                {
-                    Image("Submit")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 200, height: 80)
-                        .shadow(radius: 5)
+                Button(action: {
+                    submitGuess()
+                }) {
+                    Text("Submit Guess")
+                        .font(.headline)
+                        .foregroundColor(.white)
+                        .padding()
+                        .frame(maxWidth: .infinity)
+                        .background(selectedColors.count == 4 ? Color.green : Color.gray)
+                        .cornerRadius(10)
                 }
-                .disabled(selectedColors.count != 4) // Disable button if not 4 colors
-                .opacity(selectedColors.count == 4 ? 1.0 : 0.5) // Dim the button if not ready
-
+                .padding(.horizontal)
+                .disabled(selectedColors.count != 4) // Disable if not 4 colors
+                
+                Spacer()
             }
             .padding()
         }
@@ -105,16 +127,3 @@ struct SeedPouchPopupView: View {
         isPresented = false
     }
 }
-
-struct SeedPouchPopupView_Preview: PreviewProvider {
-    static var previews: some View {
-        SeedPouchPopupView(
-            isPresented: .constant(true),
-            currentGuess: .constant([]), // Empty array initially
-            guesses: .constant([]) // No guesses initially
-        )
-        .previewLayout(.sizeThatFits) // Use fitting size for preview
-    }
-}
-
-

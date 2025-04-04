@@ -15,13 +15,10 @@ struct guessColour {
 let guessColours: [guessColour] = [
     guessColour(name: "Red"),
     guessColour(name: "Blue"),
-    guessColour(name: "Pink"),
     guessColour(name: "Green"),
     guessColour(name: "Yellow"),
-    guessColour(name: "Purple"),
-    guessColour(name: "Orange"),
-    guessColour(name: "Silver"),
-    guessColour(name: "Black"),
-    guessColour(name: "White"),
-    
+    guessColour(name: "DyePurple"),
+    guessColour(name: "DyeOrange"),
+    guessColour(name: "DyePink"),
+    guessColour(name: "DyeTeal")
 ]
